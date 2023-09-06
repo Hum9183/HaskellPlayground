@@ -4,7 +4,7 @@ maximum' [x] = x
 maximum' (x:xs) = max x (maximum' xs)
 
 replicate'  :: Int -> a -> [a]
-replicate' n x 
+replicate' n x
     | n <= 0    = []
     | otherwise = x : replicate' (n-1) x
 
@@ -34,7 +34,33 @@ elem' a (x:xs)
 
 quicksort :: (Ord a) => [a] -> [a]
 quicksort [] = []
-quicksort (x:xs) = 
+quicksort (x:xs) =
     let smallerOrEqual = [a | a <- xs, a <= x]
         lager = [a | a <- xs, a > x]
     in  quicksort smallerOrEqual ++ [x] ++ quicksort lager
+
+largestDivisible :: Integer
+largestDivisible = head (filter p [100000,99999..])
+    where p x = x `mod` 3829 == 0
+
+chain :: Integer -> [Integer]
+chain 1 = [1]
+chain n
+    | even n = n : chain (n `div` 2)
+    | odd n  = n : chain (n * 3 + 1)
+
+numLongChains :: Int
+numLongChains = length (filter isLong (map chain [1..100]))
+    where isLong xs = length xs > 15
+
+numLongChains' :: Int
+numLongChains' =  length (filter (\xs -> length xs > 15) (map chain [1..100]))
+
+flip' :: (a -> b -> c) -> b -> a -> c
+flip' f = \x y -> f y x
+
+sum' :: (Num a) => [a] -> a
+sum' = foldl (+) 0
+
+map' :: (a -> b) -> [a] -> [b]
+map' f xs = foldr (\x acc -> f x : acc) [] xs
