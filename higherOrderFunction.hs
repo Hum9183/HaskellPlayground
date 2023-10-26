@@ -39,7 +39,7 @@ filter' p (x:xs)
 
 quicksort :: (Ord a) => [a] -> [a]
 quicksort [] = []
-quicksort (x:xs) = 
+quicksort (x:xs) =
     let smallerOrEqual = filter (<= x) xs
         lager = filter (> x) xs
     in  quicksort smallerOrEqual ++ [x] ++ quicksort lager
@@ -47,3 +47,24 @@ quicksort (x:xs) =
 largestDivisible :: Integer
 largestDivisible = head (filter p [100000,99999..])
     where p x = x `mod` 3829 == 0
+
+sum' :: (Num a) => [a] -> a
+sum' xs = foldl (\acc x -> acc + x) 0 xs
+
+sum'' :: (Num a) => [a] -> a
+sum'' = foldl (+) 0 -- 「foldl (+) 0」はリストを取る関数を返すため、引数のxsは省略出来る
+
+map'' :: (a -> b) -> [a] -> [b]
+map'' f xs = foldr (\x acc -> f x : acc) [] xs
+
+elem' :: (Eq a) => a -> [a] -> Bool
+elem' y ys = foldr (\x acc -> if x == y then True else acc) False ys
+
+maximum' :: (Ord a) => [a] -> a
+maximum' = foldl1 max
+
+reverse' :: [a] -> [a]
+reverse' = foldl (\acc x -> x : acc) []
+
+reverse'' :: [a] -> [a]
+reverse'' = foldl (flip (:)) []
