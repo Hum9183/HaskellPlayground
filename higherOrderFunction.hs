@@ -68,3 +68,10 @@ reverse' = foldl (\acc x -> x : acc) []
 
 reverse'' :: [a] -> [a]
 reverse'' = foldl (flip (:)) []
+
+and' :: [Bool] -> Bool
+and' = foldr (&&) True
+
+sqrtSums :: Int
+sqrtSums = length (takeWhile (<1000)  (scanl1 (+) (map sqrt [1..]))) + 1
+
